@@ -5,8 +5,7 @@ public class UIManager : MonoBehaviour
 {
     private GameObject _last;
 
-    [SerializeField] GameObject menu;
-    [SerializeField] GameObject scores;
+    [SerializeField] GameObject howToPlay;
     [SerializeField] GameObject game;
 
     [Space(10)]
@@ -16,14 +15,18 @@ public class UIManager : MonoBehaviour
     {
         LoadingGO.OnLoadingStarted += () =>
         {
-            menu.SetActive(false);
-            scores.SetActive(false);
+            howToPlay.SetActive(false);
             game.SetActive(false);
         };
 
         LoadingGO.OnLoadingFinished += () =>
         {
-            menu.SetActive(true);
+            howToPlay.SetActive(true);
+            howToPlay.GetComponentInChildren<Button>().onClick.AddListener(() =>
+            {
+                OpenWindow(1);
+                GameManager.Instance.RestartGame();
+            });
         };
 
         GameManager.OnGameFinsihed += (score) =>
@@ -34,7 +37,7 @@ public class UIManager : MonoBehaviour
             });
         };
 
-        _last = menu;
+        _last = howToPlay;
     }
 
     private void Update()
@@ -57,15 +60,10 @@ public class UIManager : MonoBehaviour
 
         switch(i)
         {
-            case 0: _last = menu; break;
-            case 1: _last = scores; break;
-            case 2: _last = game; break;
+            case 0: _last = howToPlay; break;
+            case 1: _last = game; break;
         }
 
         _last.SetActive(true);
-        if(i == 2)
-        {
-            GameManager.Instance.RestartGame();
-        }
     }
 }

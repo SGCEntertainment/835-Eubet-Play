@@ -12,8 +12,8 @@ public class GameManager : MonoBehaviour
     private Player Player { get; set; }
 
 
-    private Obstacle[] Obstacles { get; set; }
-    private Transform ObstacleParent { get; set; }
+    private Enemy Enemy { get; set; }
+    private Transform EnemyParent { get; set; }
 
 
     public static Action OnHandlePulled { get; set; } = delegate { };
@@ -23,8 +23,8 @@ public class GameManager : MonoBehaviour
     {
         Player = Resources.Load<Player>("player");
 
-        Obstacles = Resources.LoadAll<Obstacle>("Obstacles");
-        ObstacleParent = GameObject.Find("Environment").transform;
+        Enemy = Resources.Load<Enemy>("enemy");
+        EnemyParent = GameObject.Find("Environment").transform;
     }
 
     private void Update()
@@ -67,8 +67,8 @@ public class GameManager : MonoBehaviour
 
     private void DeleteAllObstacles()
     {
-        Obstacle[] obstacles = FindObjectsOfType<Obstacle>();
-        foreach (Obstacle ob in obstacles)
+        Enemy[] obstacles = FindObjectsOfType<Enemy>();
+        foreach (Enemy ob in obstacles)
         {
             Destroy(ob.gameObject);
         }
@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour
             Vector2 position = new Vector2(UnityEngine.Random.Range(-1.83f, 1.83f), 7.0f);
             Quaternion rotation = Quaternion.Euler(Vector3.forward * UnityEngine.Random.Range(0.0f, 360.0f));
 
-            Instantiate(Obstacles[UnityEngine.Random.Range(0, Obstacles.Length)], position, rotation, ObstacleParent);
+            Instantiate(Enemy, position, rotation, EnemyParent);
             yield return new WaitForSeconds(delay);
         }
     }
