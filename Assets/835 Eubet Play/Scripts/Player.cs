@@ -16,16 +16,11 @@ public class Player : MonoBehaviour
         transform.position = new Vector2(_camera.ScreenToWorldPoint(Input.mousePosition).x, transform.position.y);
     }
 
-    private void OnTriggerEnter2D(Collider2D coll)
+    private void OnTriggerEnter2D(Collider2D _)
     {
-        if(coll.CompareTag("gold"))
-        {
-            OnCollidedGold?.Invoke();
-            Destroy(coll.gameObject);
-            return;
-        }
-
+        OnCollidedGold?.Invoke();
         GameManager.Instance.GameOver();
+
         Destroy(gameObject);
     }
 }
