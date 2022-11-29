@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get => FindObjectOfType<GameManager>(); }
 
     private bool GameStarted { get; set; }
-    private float GameSpeed { get; set; } = 6.0f;
+    private float GameSpeed { get; set; } = 0.5f;
     public float Score { get; set; }
     private Player Player { get; set; }
 

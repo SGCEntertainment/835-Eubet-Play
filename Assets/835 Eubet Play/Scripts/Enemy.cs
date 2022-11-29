@@ -3,13 +3,28 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     private const float speed = 1.52f;
+    private Transform Target { get; set; }
+
+    private void Awake()
+    {
+        Target = FindObjectOfType<Player>().transform;
+    }
 
     private void Start()
     {
-        Vector2 toPlayer = FindObjectOfType<Player>().transform.position - transform.position;
-        transform.up = toPlayer;
-
+        InvokeRepeating(nameof(UpdateDirection), 0.0f, 4.0f);
         Destroy(gameObject, 25.0f);
+    }
+
+    private void UpdateDirection()
+    {
+        if(transform.position.y <= -2.8f)
+        {
+            return;
+        }
+
+        Vector2 toPlayer = Target.position - transform.position;
+        transform.up = toPlayer;
     }
 
     private void Update()

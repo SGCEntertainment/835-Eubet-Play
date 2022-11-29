@@ -5,6 +5,8 @@ public class UIManager : MonoBehaviour
 {
     private GameObject _last;
 
+    private const string colorString = "#F05A22";
+
     [SerializeField] GameObject howToPlay;
     [SerializeField] GameObject game;
 
@@ -31,7 +33,7 @@ public class UIManager : MonoBehaviour
 
         GameManager.OnGameFinsihed += (score) =>
         {
-            Instantiate(Resources.Load<Popup>("popup"), GameObject.Find("screen").transform).SetData(Mathf.FloorToInt(score), () =>
+            Instantiate(Resources.Load<Popup>("popup"), GameObject.Find("screen").transform).SetData(scoreText.text, () =>
             {
                 GameManager.Instance.RestartGame();
             });
@@ -48,7 +50,7 @@ public class UIManager : MonoBehaviour
             GameManager.Instance.ExitToMenu();
         }
 
-        scoreText.text = $"{Mathf.FloorToInt(GameManager.Instance.Score)}";
+        scoreText.text = $"Score <color={colorString}>{Mathf.FloorToInt(GameManager.Instance.Score)}</color>";
     }
 
     public void OpenWindow(int i)
